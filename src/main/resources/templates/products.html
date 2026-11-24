@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.hymeleaf.org/extras/spring-security"
+      layout:decorate="layout1"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+    <div class="p-3" layout:fragment="content">
+        <div class="p-3" sec:authorize="hasRole('ADMIN')">
+            <a class="btn btn-primary" th:href="@{/admin/newProduct}">New Product</a>
+        </div>
+        <table class="table">
+            <tr>
+                <th>Product ID</th><th>Name</th><th>Price</th><th>Quantity</th>
+            </tr>
+            <tr th:each="p:${productList}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.price}"></td>
+                <td th:text="${p.quantity}"></td>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <a class="btn btn-danger"
+                       th:href="@{/admin/delete(id=${p.id})}">
+                        Delete
+                    </a>
+                </td>
+<!--                <td>-->
+<!--                    <a class="btn btn-info"-->
+<!--                       th:href="@{/modifier}">-->
+<!--                        Modifier-->
+<!--                    </a>-->
+<!--                </td>-->
+            </tr>
+
+
+        </table>
+    </div>
+</body>
+</html>
